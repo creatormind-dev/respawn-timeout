@@ -6,6 +6,8 @@ import dev.creatormind.respawntimeout.state.ServerState;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.math.BlockPos;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,6 +45,38 @@ public class RespawnTimeoutMod implements ModInitializer {
             return PlayerStatus.TIMED_OUT;
 
         return PlayerStatus.AWAITING_RESPAWN;
+    }
+
+    public static void respawnPlayer(ServerPlayerEntity playerEntity) {
+        final MinecraftServer server = playerEntity.getServer();
+
+        if (server == null)
+            throw new NullPointerException("[Respawn Timeout] Server is null!");
+
+        final ServerState serverState = ServerState.getServerState(server);
+        final PlayerState playerState = ServerState.getPlayerState(playerEntity);
+
+        ServerWorld spawnWorld = server.getWorld(playerEntity.getSpawnPointDimension());
+        BlockPos spawnPosition = playerEntity.getSpawnPointPosition();
+
+        // Use the player's spawn point if it's valid, otherwise use world's spawn.
+        if (spawnWorld == null || spawnPosition == null) {
+            spawnWorld = server.getOverworld();
+            spawnPosition = spawnWorld.getSpawnPos();
+        }
+
+        final int x = spawnPosition.getX();
+        final int y = spawnPosition.getY();
+        final int z = spawnPosition.getZ();
+
+        playerEntity.teleport(spawnWorld, x, y, z, playerEntity.getYaw(), playerEntity.getPitch());
+        playerEntity.changeGameMode(server.getDefaultGameMode());
+
+        // Resets the timeout status.
+        playerState.deathTimestamp = 0L;
+
+        serverState.players.put(playerEntity.getUuid(), playerState);
+        serverState.markDirty();
     }
 
 }
