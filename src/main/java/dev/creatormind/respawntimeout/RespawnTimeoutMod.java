@@ -30,6 +30,7 @@ public class RespawnTimeoutMod implements ModInitializer {
     public void onInitialize() {
         LOGGER.info("[Respawn Timeout] Initializing");
 
+        // Commands.
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
             if (!environment.dedicated)
                 return;
@@ -40,6 +41,7 @@ public class RespawnTimeoutMod implements ModInitializer {
             RespawnCommand.register(dispatcher);
         });
 
+        // Automatic respawn verification if needed when joining.
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
             final ServerPlayerEntity player = handler.getPlayer();
 
@@ -47,6 +49,7 @@ public class RespawnTimeoutMod implements ModInitializer {
                 respawnPlayer(player);
         });
 
+        // Timing out process for when a player dies, if there's an applicable timeout.
         ServerLivingEntityEvents.AFTER_DEATH.register((entity, damageSource) -> {
             if (!(entity instanceof ServerPlayerEntity player))
                 return;
