@@ -1,0 +1,10 @@
+{
+  "cmd.respawn-timeout.clear.res": "¡El tiempo para revivir ha sido restaurado!",
+  "cmd.respawn-timeout.get.res": "El tiempo para revivir es de %d%s",
+  "cmd.respawn-timeout.set.err": "¡El tiempo de espera debe ser un numero positivo!",
+  "cmd.respawn-timeout.set.res": "Se ha configurado el tiempo para revivir a %d%s",
+  "txt.respawn-timeout.player_na": "¡No estás esperando a revivir!",
+  "txt.respawn-timeout.player_ext_na": "El jugador %s no está esperando a revivir!",
+  "txt.respawn-timeout.player_respawn": "¡Has revivido!",
+  "txt.respawn-timeout.player_status": "¡Estás esperando a revivir! Debes esperar %s antes de revivir"
+}
