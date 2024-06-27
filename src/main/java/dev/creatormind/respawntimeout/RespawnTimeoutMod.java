@@ -1,5 +1,6 @@
 package dev.creatormind.respawntimeout;
 
+import dev.creatormind.respawntimeout.commands.GetCommand;
 import dev.creatormind.respawntimeout.commands.SetCommand;
 import dev.creatormind.respawntimeout.enums.PlayerStatus;
 import dev.creatormind.respawntimeout.state.PlayerState;
@@ -32,6 +33,7 @@ public class RespawnTimeoutMod implements ModInitializer {
                 return;
 
             SetCommand.register(dispatcher);
+            GetCommand.register(dispatcher);
         });
 
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
