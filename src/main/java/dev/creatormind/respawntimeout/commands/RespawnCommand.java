@@ -4,8 +4,6 @@ import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import dev.creatormind.respawntimeout.RespawnTimeoutMod;
 import dev.creatormind.respawntimeout.enums.PlayerStatus;
-import dev.creatormind.respawntimeout.state.PlayerState;
-import dev.creatormind.respawntimeout.state.ServerState;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
