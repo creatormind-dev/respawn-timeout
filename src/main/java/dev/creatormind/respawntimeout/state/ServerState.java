@@ -81,15 +81,15 @@ public class ServerState extends PersistentState {
         );
     }
 
-    public static PlayerState getPlayerState(ServerPlayerEntity playerEntity) {
-        final MinecraftServer server = playerEntity.getServer();
+    public static PlayerState getPlayerState(ServerPlayerEntity player) {
+        final MinecraftServer server = player.getServer();
 
         if (server == null)
             throw new NullPointerException("[Respawn Timeout] Server is null!");
 
         final ServerState serverState = ServerState.getServerState(server);
 
-        return serverState.players.computeIfAbsent(playerEntity.getUuid(), (uuid) -> new PlayerState());
+        return serverState.players.computeIfAbsent(player.getUuid(), (uuid) -> new PlayerState());
     }
 
 }
