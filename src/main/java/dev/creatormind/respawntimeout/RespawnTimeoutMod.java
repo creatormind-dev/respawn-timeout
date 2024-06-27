@@ -1,5 +1,6 @@
 package dev.creatormind.respawntimeout;
 
+import dev.creatormind.respawntimeout.commands.ClearCommand;
 import dev.creatormind.respawntimeout.commands.GetCommand;
 import dev.creatormind.respawntimeout.commands.SetCommand;
 import dev.creatormind.respawntimeout.enums.PlayerStatus;
@@ -34,6 +35,7 @@ public class RespawnTimeoutMod implements ModInitializer {
 
             SetCommand.register(dispatcher);
             GetCommand.register(dispatcher);
+            ClearCommand.register(dispatcher);
         });
 
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
@@ -53,10 +55,12 @@ public class RespawnTimeoutMod implements ModInitializer {
                 throw new NullPointerException("[Respawn Timeout] Server is null!");
 
             final ServerState serverState = ServerState.getServerState(server);
-            final PlayerState playerState = ServerState.getPlayerState(player);
 
+            // If there's no timeout there's no need to perform any action.
             if (serverState.respawnTimeout <= 0)
                 return;
+
+            final PlayerState playerState = ServerState.getPlayerState(player);
 
             playerState.deathTimestamp = System.currentTimeMillis();
 
