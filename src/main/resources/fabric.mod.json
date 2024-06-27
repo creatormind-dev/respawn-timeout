@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "respawn-timeout",
+  "version": "${version}",
+  "name": "Respawn Timeout",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/respawn-timeout/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "dev.creatormind.respawntimeout.RespawnTimeoutMod"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric-api": "*",
+    "java": ">=21",
+    "minecraft": ">=${minecraft_version}"
+  }
+}
