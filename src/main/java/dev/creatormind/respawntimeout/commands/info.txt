@@ -1,0 +1,20 @@
+---- Command Registration Basics ----
+
+Structure:
+
+    namespace
+        |_ command_name
+            |_ requirements
+            |_ arguments
+                |_ argument_requirements
+                |_ ...
+                    |_ executes
+
+Example: (not actual code)
+
+    literal("respawntimeout")
+        |_ literal("set")
+            |_ requires("permission_level", 4)
+            |_ argument("timeout", int64_t)
+                |_ literal("seconds")
+                    |_ executes(set_fn)

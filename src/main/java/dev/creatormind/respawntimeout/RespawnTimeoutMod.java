@@ -1,9 +1,11 @@
 package dev.creatormind.respawntimeout;
 
+import dev.creatormind.respawntimeout.commands.SetCommand;
 import dev.creatormind.respawntimeout.enums.PlayerStatus;
 import dev.creatormind.respawntimeout.state.PlayerState;
 import dev.creatormind.respawntimeout.state.ServerState;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.server.MinecraftServer;
@@ -24,6 +26,13 @@ public class RespawnTimeoutMod implements ModInitializer {
     @Override
     public void onInitialize() {
         LOGGER.info("[Respawn Timeout] Initializing");
+
+        CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
+            if (!environment.dedicated)
+                return;
+
+            SetCommand.register(dispatcher);
+        });
 
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
             final ServerPlayerEntity player = handler.getPlayer();
