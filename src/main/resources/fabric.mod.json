@@ -7,7 +7,6 @@
   "authors": [],
   "contact": {},
   "license": "MIT",
-  "icon": "assets/respawn-timeout/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
