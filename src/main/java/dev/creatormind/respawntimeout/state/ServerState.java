@@ -47,9 +47,9 @@ public class ServerState extends PersistentState {
         playersNbt.getKeys().forEach((key) -> {
             final PlayerState playerState = new PlayerState();
 
-            playerState.deathTimestamp = tag.getCompound(key).getLong("deathTimestamp");
+            playerState.deathTimestamp = playersNbt.getCompound(key).getLong("deathTimestamp");
 
-            final UUID uuid = UUID.fromString(playersNbt.getString(key));
+            final UUID uuid = UUID.fromString(key);
 
             serverState.players.put(uuid, playerState);
         });
