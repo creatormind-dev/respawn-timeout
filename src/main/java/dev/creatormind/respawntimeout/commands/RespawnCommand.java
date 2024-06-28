@@ -4,10 +4,15 @@ import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import dev.creatormind.respawntimeout.RespawnTimeoutMod;
 import dev.creatormind.respawntimeout.enums.PlayerStatus;
+import dev.creatormind.respawntimeout.state.PlayerState;
+import dev.creatormind.respawntimeout.state.ServerState;
+import dev.creatormind.respawntimeout.utils.TimeFormatter;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
+
+import java.util.concurrent.TimeUnit;
 
 import static net.minecraft.server.command.CommandManager.*;
 
@@ -34,6 +39,8 @@ public class RespawnCommand {
     }
 
     private static int respawn(ServerCommandSource source, ServerPlayerEntity player, boolean force) {
+        final ServerState serverState = ServerState.getServerState(source.getServer());
+        final PlayerState playerState = ServerState.getPlayerState(player);
         final PlayerStatus playerStatus = RespawnTimeoutMod.getPlayerStatus(player);
 
         switch (playerStatus) {
@@ -51,9 +58,15 @@ public class RespawnCommand {
                     RespawnTimeoutMod.respawnPlayer(player);
 
                     source.sendFeedback(Text.translatable("txt.respawn-timeout.player_ext_respawn", player.getName().getString()), false);
+                    player.sendMessage(Text.translatable("txt.respawn-timeout.player_respawn"), false);
                 }
                 else {
-                    source.sendFeedback(Text.translatable("txt.respawn-timeout.player_status"), false);
+                    final long remainingTime = serverState.timeUnit.toMillis(serverState.respawnTimeout) - (System.currentTimeMillis() - playerState.deathTimestamp);
+
+                    source.sendFeedback(Text.translatable(
+                        "txt.respawn-timeout.player_status",
+                        TimeFormatter.format(remainingTime, TimeUnit.MILLISECONDS)
+                    ), false);
                 }
 
                 break;

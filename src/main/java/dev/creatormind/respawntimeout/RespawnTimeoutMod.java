@@ -7,6 +7,7 @@ import dev.creatormind.respawntimeout.commands.SetCommand;
 import dev.creatormind.respawntimeout.enums.PlayerStatus;
 import dev.creatormind.respawntimeout.state.PlayerState;
 import dev.creatormind.respawntimeout.state.ServerState;
+import dev.creatormind.respawntimeout.utils.TimeFormatter;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
@@ -14,10 +15,13 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.GameMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.concurrent.TimeUnit;
 
 
 public class RespawnTimeoutMod implements ModInitializer {
@@ -44,9 +48,23 @@ public class RespawnTimeoutMod implements ModInitializer {
         // Automatic respawn verification if needed when joining.
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
             final ServerPlayerEntity player = handler.getPlayer();
+            final ServerState serverState = ServerState.getServerState(server);
+            final PlayerState playerState = ServerState.getPlayerState(player);
+            final PlayerStatus playerStatus = getPlayerStatus(player);
 
-            if (getPlayerStatus(player) == PlayerStatus.AWAITING_RESPAWN)
+            if (playerStatus == PlayerStatus.TIMED_OUT) {
+                final long remainingTime = serverState.timeUnit.toMillis(serverState.respawnTimeout) - (System.currentTimeMillis() - playerState.deathTimestamp);
+
+                player.sendMessage(Text.translatable(
+                    "txt.respawn-timeout.player_status",
+                    TimeFormatter.format(remainingTime, TimeUnit.MILLISECONDS)
+                ), false);
+            }
+            else if (playerStatus == PlayerStatus.AWAITING_RESPAWN) {
                 respawnPlayer(player);
+
+                player.sendMessage(Text.translatable("txt.respawn-timeout.player_respawn"), false);
+            }
         });
 
         // Timing out process for when a player dies, if there's an applicable timeout.
@@ -73,6 +91,10 @@ public class RespawnTimeoutMod implements ModInitializer {
             serverState.markDirty();
 
             player.changeGameMode(GameMode.SPECTATOR);
+            player.sendMessage(Text.translatable(
+                "txt.respawn-timeout.player_status",
+                TimeFormatter.format(serverState.respawnTimeout, serverState.timeUnit)
+            ), false);
         });
     }
 
