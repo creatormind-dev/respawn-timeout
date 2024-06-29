@@ -3,9 +3,15 @@
   "id": "respawn-timeout",
   "version": "${version}",
   "name": "Respawn Timeout",
-  "description": "",
-  "authors": [],
-  "contact": {},
+  "description": "Prevents immediate respawning by applying a configurable timeout",
+  "authors": [
+    "creatormind"
+  ],
+  "contributors": [],
+  "contact": {
+    "issues": "https://github.com/creatormind-dev/respawn-timeout/issues",
+    "sources": "https://github.com/creatormind-dev/respawn-timeout"
+  },
   "license": "MIT",
   "environment": "*",
   "entrypoints": {
@@ -16,7 +22,7 @@
   "depends": {
     "fabricloader": ">=${loader_version}",
     "fabric-api": "*",
-    "java": ">=21",
+    "java": ">=17",
     "minecraft": ">=${minecraft_version}"
   }
 }
