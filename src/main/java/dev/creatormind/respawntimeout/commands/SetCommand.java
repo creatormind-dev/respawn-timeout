@@ -68,7 +68,7 @@ public class SetCommand {
         serverState.timeUnit = unit;
         serverState.markDirty();
 
-        source.sendFeedback(Text.translatable(
+        source.sendFeedback(() -> Text.translatable(
             "cmd.respawn-timeout.set.res",
             timeout,
             unit.toString().toLowerCase().charAt(0) + ""

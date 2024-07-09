@@ -4,7 +4,6 @@ import dev.creatormind.respawntimeout.RespawnTimeoutMod;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.PersistentState;
 import net.minecraft.world.PersistentStateManager;
 
@@ -66,19 +65,20 @@ public class ServerState extends PersistentState {
         return serverState;
     }
 
+    private static final Type<ServerState> type = new Type<>(
+        ServerState::new,
+        ServerState::createFromNbt,
+        null
+    );
+
     public static ServerState getServerState(MinecraftServer server) {
-        final ServerWorld overworld = server.getOverworld();
+        final PersistentStateManager stateManager = server.getOverworld().getPersistentStateManager();
 
-        if (overworld == null)
-            throw new NullPointerException("[Respawn Timeout] Overworld is null!");
+        final ServerState state = stateManager.getOrCreate(type, RespawnTimeoutMod.MOD_ID);
 
-        final PersistentStateManager stateManager = overworld.getPersistentStateManager();
+        state.markDirty();
 
-        return stateManager.getOrCreate(
-                ServerState::createFromNbt,
-                ServerState::new,
-                RespawnTimeoutMod.MOD_ID
-        );
+        return state;
     }
 
     public static PlayerState getPlayerState(ServerPlayerEntity player) {

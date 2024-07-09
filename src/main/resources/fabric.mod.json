@@ -24,8 +24,5 @@
     "fabric-api": "*",
     "java": ">=17",
     "minecraft": ">=${minecraft_version}"
-  },
-  "suggests": {
-    "forgottengraves": "*"
   }
 }

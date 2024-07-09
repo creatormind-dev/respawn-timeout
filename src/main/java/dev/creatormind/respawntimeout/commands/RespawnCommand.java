@@ -49,7 +49,7 @@ public class RespawnCommand {
                     ? "txt.respawn-timeout.player_na"
                     : "txt.respawn-timeout.player_ext_na";
 
-                source.sendFeedback(Text.translatable(translationKey, player.getName().getString()), false);
+                source.sendFeedback(() -> Text.translatable(translationKey, player.getName().getString()), false);
 
                 break;
             }
@@ -57,13 +57,13 @@ public class RespawnCommand {
                 if (force) {
                     RespawnTimeoutMod.respawnPlayer(player);
 
-                    source.sendFeedback(Text.translatable("txt.respawn-timeout.player_ext_respawn", player.getName().getString()), false);
+                    source.sendFeedback(() -> Text.translatable("txt.respawn-timeout.player_ext_respawn", player.getName().getString()), false);
                     player.sendMessage(Text.translatable("txt.respawn-timeout.player_respawn"), false);
                 }
                 else {
                     final long remainingTime = serverState.timeUnit.toMillis(serverState.respawnTimeout) - (System.currentTimeMillis() - playerState.deathTimestamp);
 
-                    source.sendFeedback(Text.translatable(
+                    source.sendFeedback(() -> Text.translatable(
                         "txt.respawn-timeout.player_status",
                         TimeFormatter.format(remainingTime, TimeUnit.MILLISECONDS)
                     ), false);
@@ -77,7 +77,7 @@ public class RespawnCommand {
                 player.sendMessage(Text.translatable("txt.respawn-timeout.player_respawn"), false);
 
                 if (force)
-                    source.sendFeedback(Text.translatable("txt.respawn-timeout.player_ext_respawn", player.getName().getString()), false);
+                    source.sendFeedback(() -> Text.translatable("txt.respawn-timeout.player_ext_respawn", player.getName().getString()), false);
 
                 break;
             }
