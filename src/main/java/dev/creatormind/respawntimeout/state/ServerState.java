@@ -2,6 +2,7 @@ package dev.creatormind.respawntimeout.state;
 
 import dev.creatormind.respawntimeout.RespawnTimeoutMod;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.world.PersistentState;
@@ -20,7 +21,7 @@ public class ServerState extends PersistentState {
 
 
     @Override
-    public NbtCompound writeNbt(NbtCompound nbt) {
+    public NbtCompound writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
         final NbtCompound playersNbt = new NbtCompound();
 
         players.forEach((uuid, playerState) -> {
@@ -39,7 +40,7 @@ public class ServerState extends PersistentState {
     }
 
 
-    public static ServerState createFromNbt(NbtCompound tag) {
+    public static ServerState createFromNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
         final ServerState serverState = new ServerState();
         final NbtCompound playersNbt = tag.getCompound("players");
 
