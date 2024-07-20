@@ -1,9 +1,6 @@
 package dev.creatormind.respawntimeout;
 
-import dev.creatormind.respawntimeout.commands.ClearCommand;
-import dev.creatormind.respawntimeout.commands.GetCommand;
-import dev.creatormind.respawntimeout.commands.RespawnCommand;
-import dev.creatormind.respawntimeout.commands.SetCommand;
+import dev.creatormind.respawntimeout.commands.*;
 import dev.creatormind.respawntimeout.enums.PlayerStatus;
 import dev.creatormind.respawntimeout.state.PlayerState;
 import dev.creatormind.respawntimeout.state.ServerState;
@@ -40,6 +37,7 @@ public class RespawnTimeoutMod implements ModInitializer {
                 return;
 
             SetCommand.register(dispatcher);
+            SetRandomCommand.register(dispatcher);
             GetCommand.register(dispatcher);
             ClearCommand.register(dispatcher);
             RespawnCommand.register(dispatcher);

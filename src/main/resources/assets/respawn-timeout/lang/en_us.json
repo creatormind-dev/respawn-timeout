@@ -1,11 +1,12 @@
 {
-  "cmd.respawn-timeout.clear.res": "Respawn timeout has been reset!",
-  "cmd.respawn-timeout.get.res": "Respawn timeout is %d%s",
-  "cmd.respawn-timeout.set.err": "Timeout must be a positive number!",
-  "cmd.respawn-timeout.set.res": "Respawn timeout set to %d%s",
-  "txt.respawn-timeout.player_na": "You are not on timeout!",
-  "txt.respawn-timeout.player_ext_na": "Player %s is not on timeout!",
-  "txt.respawn-timeout.player_ext_respawn": "Player %s has respawned!",
-  "txt.respawn-timeout.player_respawn": "You have respawned!",
-  "txt.respawn-timeout.player_status": "You are on timeout! You have to wait %s before respawning"
+  "respawn-timeout.cmd.clear.success": "Respawn timeout has been reset!",
+  "respawn-timeout.cmd.get.success": "Respawn timeout is %d%s",
+  "respawn-timeout.cmd.set.error.negative": "Timeout must be a positive number!",
+  "respawn-timeout.cmd.set.error.invalid": "Timeout in %s must be a number between %d and %d!",
+  "respawn-timeout.cmd.set.success": "Respawn timeout set to %d%s",
+  "respawn-timeout.info.self.na": "You are not on timeout!",
+  "respawn-timeout.info.self.status": "You are on timeout! You have to wait %s before respawning",
+  "respawn-timeout.info.self.respawned": "You have respawned!",
+  "respawn-timeout.info.player.na": "Player %s is not on timeout!",
+  "respawn-timeout.info.player.respawned": "Player %s has respawned!"
 }
