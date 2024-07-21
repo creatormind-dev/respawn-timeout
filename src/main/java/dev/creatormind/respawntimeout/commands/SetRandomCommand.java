@@ -36,11 +36,9 @@ public class SetRandomCommand {
 
     private static int set(ServerCommandSource source, long minTimeout, long maxTimeout) throws CommandSyntaxException {
         if (minTimeout < 0L || minTimeout >= maxTimeout || minTimeout >= MAX_TIMEOUT_IN_SECONDS)
-            // TODO: Change the error message to fit the actual case.
             throw new SimpleCommandExceptionType(Text.translatable("respawn-timeout.commands.set_random.error.invalid_min")).create();
 
         if (maxTimeout > MAX_TIMEOUT_IN_SECONDS)
-            // TODO: Change the error message to fit the actual case.
             throw new SimpleCommandExceptionType(Text.translatable("respawn-timeout.commands.set_random.error.invalid_max")).create();
 
         final ServerState serverState = ServerState.getServerState(source.getServer());

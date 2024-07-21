@@ -87,7 +87,7 @@ public class SetCommand {
                     break;
             default:
                 throw new SimpleCommandExceptionType(Text.translatable(
-                    "respawn-timeout.cmd.set.error.invalid",
+                    "respawn-timeout.commands.set.error.invalid",
                     unit.toString().toUpperCase(),
                     0L,
                     maxTimeout

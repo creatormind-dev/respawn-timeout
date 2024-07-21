@@ -1,6 +1,7 @@
 {
   "respawn-timeout.commands.clear.success": "¡El tiempo para revivir ha sido restaurado!",
-  "respawn-timeout.commands.get.success": "El tiempo para revivir es de %d%s",
+  "respawn-timeout.commands.get.success.fixed": "El tiempo para revivir es de %d%s",
+  "respawn-timeout.commands.get.success.random": "El tiempo para revivir es un valor aleatorio entre %d y %d",
   "respawn-timeout.commands.set.error.negative": "¡El tiempo de espera debe ser un numero positivo!",
   "respawn-timeout.commands.set.error.invalid": "¡El tiempo de espera en %s debe ser un numero entre %d y %d!",
   "respawn-timeout.commands.set.success": "Se ha configurado el tiempo para revivir a %d%s",
