@@ -3,11 +3,10 @@ plugins {
     id 'maven-publish'
 }
 
-version = project.mod_version
 group = project.maven_group
 
 base {
-    archivesName = project.archives_base_name
+    archivesName = "${project.name}_${project.mod_version}+${project.minecraft_version}"
 }
 
 repositories {
@@ -77,7 +76,7 @@ java {
 
 jar {
     from("LICENSE") {
-        rename { "${it}_${project.base.archivesName.get()}"}
+        rename { "${it}_${project.base.archivesName.get()}" }
     }
 }
 
