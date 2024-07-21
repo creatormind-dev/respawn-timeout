@@ -29,43 +29,47 @@ public class SetCommand {
         dispatcher.register(literal("respawntimeout")
             .then(literal("set")
                 .requires((source) -> source.hasPermissionLevel(ADMIN_PERMISSION_LEVEL))
-                .then(argument("timeout", longArg(0L, MAX_TIMEOUT_IN_SECONDS))
-                    .then(literal("seconds")
-                        .executes((context) -> set(context.getSource(), getLong(context, "timeout"), MAX_TIMEOUT_IN_SECONDS, TimeUnit.SECONDS))
-                    ))));
+                .then(literal("fixed")
+                    .then(argument("timeout", longArg(0L, MAX_TIMEOUT_IN_SECONDS))
+                        .then(literal("seconds")
+                            .executes((context) -> set(context.getSource(), getLong(context, "timeout"), MAX_TIMEOUT_IN_SECONDS, TimeUnit.SECONDS))
+                        )))));
 
         // Registration call for configuration in minutes.
         dispatcher.register(literal("respawntimeout")
             .then(literal("set")
                 .requires((source) -> source.hasPermissionLevel(ADMIN_PERMISSION_LEVEL))
-                .then(argument("timeout", longArg(0L, MAX_TIMEOUT_IN_MINUTES))
-                    .then(literal("minutes")
-                        .executes((context) -> set(context.getSource(), getLong(context, "timeout"), MAX_TIMEOUT_IN_MINUTES, TimeUnit.MINUTES))
-                    ))));
+                .then(literal("fixed")
+                    .then(argument("timeout", longArg(0L, MAX_TIMEOUT_IN_MINUTES))
+                        .then(literal("minutes")
+                            .executes((context) -> set(context.getSource(), getLong(context, "timeout"), MAX_TIMEOUT_IN_MINUTES, TimeUnit.MINUTES))
+                        )))));
 
         // Registration call for configuration in hours.
         dispatcher.register(literal("respawntimeout")
             .then(literal("set")
                 .requires((source) -> source.hasPermissionLevel(ADMIN_PERMISSION_LEVEL))
-                .then(argument("timeout", longArg(0L, MAX_TIMEOUT_IN_HOURS))
-                    .then(literal("hours")
-                        .executes((context) -> set(context.getSource(), getLong(context, "timeout"), MAX_TIMEOUT_IN_HOURS, TimeUnit.HOURS))
-                    ))));
+                .then(literal("fixed")
+                    .then(argument("timeout", longArg(0L, MAX_TIMEOUT_IN_HOURS))
+                        .then(literal("hours")
+                            .executes((context) -> set(context.getSource(), getLong(context, "timeout"), MAX_TIMEOUT_IN_HOURS, TimeUnit.HOURS))
+                        )))));
 
         // Registration call for configuration in days.
         dispatcher.register(literal("respawntimeout")
             .then(literal("set")
                 .requires((source) -> source.hasPermissionLevel(ADMIN_PERMISSION_LEVEL))
-                .then(argument("timeout", longArg(0L, MAX_TIMEOUT_IN_DAYS))
-                    .then(literal("days")
-                        .executes((context) -> set(context.getSource(), getLong(context, "timeout"), MAX_TIMEOUT_IN_DAYS, TimeUnit.DAYS))
-                    ))));
+                .then(literal("fixed")
+                    .then(argument("timeout", longArg(0L, MAX_TIMEOUT_IN_DAYS))
+                        .then(literal("days")
+                            .executes((context) -> set(context.getSource(), getLong(context, "timeout"), MAX_TIMEOUT_IN_DAYS, TimeUnit.DAYS))
+                        )))));
     }
 
     private static int set(ServerCommandSource source, long timeout, long maxTimeout, TimeUnit unit) throws CommandSyntaxException {
         // No comment.
         if (timeout < 0L)
-            throw new SimpleCommandExceptionType(Text.translatable("respawn-timeout.cmd.set.error.negative")).create();
+            throw new SimpleCommandExceptionType(Text.translatable("respawn-timeout.commands.set.error.negative")).create();
 
         // Throws an error in case the timeout in a time unit is out of range.
         switch (unit) {
@@ -94,10 +98,12 @@ public class SetCommand {
 
         serverState.respawnTimeout = timeout;
         serverState.timeUnit = unit;
+        serverState.minRandomTimeout = 0L;
+        serverState.maxRandomTimeout = 0L;
         serverState.markDirty();
 
         source.sendFeedback(() -> Text.translatable(
-            "respawn-timeout.cmd.set.success",
+            "respawn-timeout.commands.set.success",
             timeout,
             unit.toString().toLowerCase().charAt(0) + ""
         ), true);

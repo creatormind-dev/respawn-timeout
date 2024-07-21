@@ -61,7 +61,7 @@ public class RespawnCommand {
                     player.sendMessage(Text.translatable("respawn-timeout.info.self.respawned"), false);
                 }
                 else {
-                    final long remainingTime = serverState.timeUnit.toMillis(serverState.respawnTimeout) - (System.currentTimeMillis() - playerState.deathTimestamp);
+                    final long remainingTime = serverState.timeUnit.toMillis(playerState.respawnTimeout) - (System.currentTimeMillis() - playerState.deathTimestamp);
 
                     source.sendFeedback(() -> Text.translatable(
                         "respawn-timeout.info.self.status",

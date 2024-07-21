@@ -25,11 +25,20 @@ public class GetCommand {
     private static int get(ServerCommandSource source) {
         final ServerState serverState = ServerState.getServerState(source.getServer());
 
-        source.sendFeedback(() -> Text.translatable(
-            "respawn-timeout.cmd.get.success",
-            serverState.respawnTimeout,
-            serverState.timeUnit.toString().toLowerCase().charAt(0) + ""
-        ), false);
+        if (serverState.respawnTimeout >= 0) {
+            source.sendFeedback(() -> Text.translatable(
+                "respawn-timeout.commands.get.success.fixed",
+                serverState.respawnTimeout,
+                serverState.timeUnit.toString().toLowerCase().charAt(0) + ""
+            ), false);
+        }
+        else {
+            source.sendFeedback(() -> Text.translatable(
+                "respawn-timeout.commands.get.success.random",
+                serverState.minRandomTimeout,
+                serverState.maxRandomTimeout
+            ), false);
+        }
 
         return Command.SINGLE_SUCCESS;
     }
