@@ -1,6 +1,6 @@
 # Respawn Timeout
 
-Respawn Timeout is a Fabric mod that times out players when they die, preventing them from immediately respawning.
+Respawn Timeout is a Fabric mod that times out players when they die, preventing them from immediately respawning. Go outside and touch some grass in the meantime.
 
 ## Configuration
 
@@ -12,16 +12,26 @@ The mod is configurable via commands, since it operates on the server-side of th
 
 **Usage:** `/respawntimeout get`
 
-### Set Timeout
+### Set Fixed Timeout
 
 > Sets the specified amount of time as the timeout setting. Up to a maximum amount of 1 week for all time units.
 > Smaller time units can be used for a more specific control of time.
+> Using a fixed timeout overrides any previously configured random timeout.
 
-**Usage:** `/respawntimeout set <amount> <seconds|minutes|hours|days>`
+**Usage:** `/respawntimeout set fixed <amount> <seconds|minutes|hours|days>`
+
+### Set Random Timeout
+
+> Sets a random timeout (in seconds) between a `minimum` and `maximum` value. Up to an overall maximum amount of 1 week.
+> Each time a player dies a new, random timeout will be assigned.
+> Using a random timeout overrides any previously configured fixed timeout.
+
+**Usage:** `/respawntimeout set random <min> <max>`
 
 ### Disable/Clear Timeout
 
 > Changes the timeout setting to 0, effectively disabling it.
+> Disables both fixed and random configurations.
 
 **Usage:** `/respawntimeout clear`
 
