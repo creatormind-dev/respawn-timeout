@@ -46,8 +46,8 @@ public class RespawnCommand {
         switch (playerStatus) {
             case ALIVE: {
                 String translationKey = (player == source.getPlayer())
-                    ? "txt.respawn-timeout.player_na"
-                    : "txt.respawn-timeout.player_ext_na";
+                    ? "respawn-timeout.info.self.na"
+                    : "respawn-timeout.info.player.na";
 
                 source.sendFeedback(Text.translatable(translationKey, player.getName().getString()), false);
 
@@ -57,14 +57,14 @@ public class RespawnCommand {
                 if (force) {
                     RespawnTimeoutMod.respawnPlayer(player);
 
-                    source.sendFeedback(Text.translatable("txt.respawn-timeout.player_ext_respawn", player.getName().getString()), false);
-                    player.sendMessage(Text.translatable("txt.respawn-timeout.player_respawn"), false);
+                    source.sendFeedback(Text.translatable("respawn-timeout.info.player.respawned", player.getName().getString()), false);
+                    player.sendMessage(Text.translatable("respawn-timeout.info.self.respawned"), false);
                 }
                 else {
                     final long remainingTime = serverState.timeUnit.toMillis(serverState.respawnTimeout) - (System.currentTimeMillis() - playerState.deathTimestamp);
 
                     source.sendFeedback(Text.translatable(
-                        "txt.respawn-timeout.player_status",
+                        "respawn-timeout.info.self.status",
                         TimeFormatter.format(remainingTime, TimeUnit.MILLISECONDS)
                     ), false);
                 }
@@ -74,10 +74,10 @@ public class RespawnCommand {
             case AWAITING_RESPAWN: {
                 RespawnTimeoutMod.respawnPlayer(player);
 
-                player.sendMessage(Text.translatable("txt.respawn-timeout.player_respawn"), false);
+                player.sendMessage(Text.translatable("respawn-timeout.info.self.respawned"), false);
 
                 if (force)
-                    source.sendFeedback(Text.translatable("txt.respawn-timeout.player_ext_respawn", player.getName().getString()), false);
+                    source.sendFeedback(Text.translatable("respawn-timeout.info.player.respawned", player.getName().getString()), false);
 
                 break;
             }

@@ -28,7 +28,7 @@ public class ClearCommand {
         serverState.respawnTimeout = 0;
         serverState.markDirty();
 
-        source.sendFeedback(Text.translatable("cmd.respawn-timeout.clear.res"), false);
+        source.sendFeedback(Text.translatable("respawn-timeout.commands.clear.success"), false);
 
         return Command.SINGLE_SUCCESS;
     }
