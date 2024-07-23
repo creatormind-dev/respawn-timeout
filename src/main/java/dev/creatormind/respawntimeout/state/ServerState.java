@@ -15,9 +15,15 @@ import java.util.concurrent.TimeUnit;
 
 public class ServerState extends PersistentState {
 
+    public HashMap<UUID, PlayerState> players   = new HashMap<>();
+
+    // Min and max timeouts will always be in seconds.
+    public long maxRandomTimeout                = 0L;
+    public long minRandomTimeout                = 0L;
+
+    // This is the global/server specific timeout that will be applied to everyone equally.
     public long respawnTimeout                  = 0L;
     public TimeUnit timeUnit                    = TimeUnit.SECONDS;
-    public HashMap<UUID, PlayerState> players   = new HashMap<>();
 
 
     @Override
@@ -33,6 +39,8 @@ public class ServerState extends PersistentState {
         });
 
         nbt.put("players", playersNbt);
+        nbt.putLong("maxRandomTimeout", maxRandomTimeout);
+        nbt.putLong("minRandomTimeout", minRandomTimeout);
         nbt.putLong("respawnTimeout", respawnTimeout);
         nbt.putString("timeUnit", timeUnit.toString());
 
@@ -54,6 +62,8 @@ public class ServerState extends PersistentState {
             serverState.players.put(uuid, playerState);
         });
 
+        serverState.maxRandomTimeout = tag.getLong("maxRandomTimeout");
+        serverState.minRandomTimeout = tag.getLong("minRandomTimeout");
         serverState.respawnTimeout = tag.getLong("respawnTimeout");
 
         try {
@@ -75,9 +85,9 @@ public class ServerState extends PersistentState {
         final PersistentStateManager stateManager = overworld.getPersistentStateManager();
 
         return stateManager.getOrCreate(
-                ServerState::createFromNbt,
-                ServerState::new,
-                RespawnTimeoutMod.MOD_ID
+            ServerState::createFromNbt,
+            ServerState::new,
+            RespawnTimeoutMod.MOD_ID
         );
     }
 

@@ -98,6 +98,8 @@ public class SetCommand {
 
         serverState.respawnTimeout = timeout;
         serverState.timeUnit = unit;
+        serverState.minRandomTimeout = 0L;
+        serverState.maxRandomTimeout = 0L;
         serverState.markDirty();
 
         source.sendFeedback(Text.translatable(

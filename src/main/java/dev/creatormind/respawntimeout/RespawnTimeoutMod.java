@@ -1,9 +1,6 @@
 package dev.creatormind.respawntimeout;
 
-import dev.creatormind.respawntimeout.commands.ClearCommand;
-import dev.creatormind.respawntimeout.commands.GetCommand;
-import dev.creatormind.respawntimeout.commands.RespawnCommand;
-import dev.creatormind.respawntimeout.commands.SetCommand;
+import dev.creatormind.respawntimeout.commands.*;
 import dev.creatormind.respawntimeout.enums.PlayerStatus;
 import dev.creatormind.respawntimeout.state.PlayerState;
 import dev.creatormind.respawntimeout.state.ServerState;
@@ -21,6 +18,7 @@ import net.minecraft.world.GameMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 
@@ -40,6 +38,7 @@ public class RespawnTimeoutMod implements ModInitializer {
                 return;
 
             SetCommand.register(dispatcher);
+            SetRandomCommand.register(dispatcher);
             GetCommand.register(dispatcher);
             ClearCommand.register(dispatcher);
             RespawnCommand.register(dispatcher);
@@ -53,7 +52,7 @@ public class RespawnTimeoutMod implements ModInitializer {
             final PlayerStatus playerStatus = getPlayerStatus(player);
 
             if (playerStatus == PlayerStatus.TIMED_OUT) {
-                final long remainingTime = serverState.timeUnit.toMillis(serverState.respawnTimeout) - (System.currentTimeMillis() - playerState.deathTimestamp);
+                final long remainingTime = serverState.timeUnit.toMillis(playerState.respawnTimeout) - (System.currentTimeMillis() - playerState.deathTimestamp);
 
                 player.sendMessage(Text.translatable(
                     "respawn-timeout.info.self.status",
@@ -80,10 +79,15 @@ public class RespawnTimeoutMod implements ModInitializer {
             final ServerState serverState = ServerState.getServerState(server);
 
             // If there's no timeout there's no need to perform any action.
-            if (serverState.respawnTimeout <= 0)
+            if (serverState.respawnTimeout == 0L)
                 return;
 
             final PlayerState playerState = ServerState.getPlayerState(player);
+
+            if (serverState.respawnTimeout < 0L)
+                playerState.respawnTimeout = new Random().nextLong((serverState.maxRandomTimeout - serverState.minRandomTimeout) + 1) + serverState.minRandomTimeout;
+            else
+                playerState.respawnTimeout = serverState.respawnTimeout;
 
             playerState.deathTimestamp = System.currentTimeMillis();
 
@@ -93,7 +97,7 @@ public class RespawnTimeoutMod implements ModInitializer {
             player.changeGameMode(GameMode.SPECTATOR);
             player.sendMessage(Text.translatable(
                 "respawn-timeout.info.self.status",
-                TimeFormatter.format(serverState.respawnTimeout, serverState.timeUnit)
+                TimeFormatter.format(playerState.respawnTimeout, serverState.timeUnit)
             ), false);
         });
     }
@@ -112,7 +116,7 @@ public class RespawnTimeoutMod implements ModInitializer {
         if (playerState.deathTimestamp == 0L || !player.isSpectator())
             return PlayerStatus.ALIVE;
 
-        final long respawnTimeoutInSeconds = serverState.timeUnit.toSeconds(serverState.respawnTimeout);
+        final long respawnTimeoutInSeconds = serverState.timeUnit.toSeconds(playerState.respawnTimeout);
         final long timeSinceDeathInSeconds = (System.currentTimeMillis() - playerState.deathTimestamp) / 1000L;
 
         // Time elapsed since death should be less than the defined timeout for a player to be timed out.
@@ -149,6 +153,7 @@ public class RespawnTimeoutMod implements ModInitializer {
 
         // Resets the timeout status.
         playerState.deathTimestamp = 0L;
+        playerState.respawnTimeout = 0L;
 
         serverState.players.put(player.getUuid(), playerState);
         serverState.markDirty();
