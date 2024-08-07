@@ -1,10 +1,16 @@
 {
-  "cmd.respawn-timeout.clear.res": "¡El tiempo para revivir ha sido restaurado!",
-  "cmd.respawn-timeout.get.res": "El tiempo para revivir es de %d%s",
-  "cmd.respawn-timeout.set.err": "¡El tiempo de espera debe ser un numero positivo!",
-  "cmd.respawn-timeout.set.res": "Se ha configurado el tiempo para revivir a %d%s",
-  "txt.respawn-timeout.player_na": "¡No estás esperando a revivir!",
-  "txt.respawn-timeout.player_ext_na": "El jugador %s no está esperando a revivir!",
-  "txt.respawn-timeout.player_respawn": "¡Has revivido!",
-  "txt.respawn-timeout.player_status": "¡Estás esperando a revivir! Debes esperar %s antes de revivir"
+  "respawn-timeout.commands.clear.success": "¡El tiempo para revivir ha sido restaurado!",
+  "respawn-timeout.commands.get.success.fixed": "El tiempo para revivir es de %d%s",
+  "respawn-timeout.commands.get.success.random": "El tiempo para revivir es un valor aleatorio entre %d y %d",
+  "respawn-timeout.commands.set.error.negative": "¡El tiempo de espera debe ser un numero positivo!",
+  "respawn-timeout.commands.set.error.invalid": "¡El tiempo de espera en %s debe ser un numero entre %d y %d!",
+  "respawn-timeout.commands.set.success": "Se ha configurado el tiempo para revivir a %d%s",
+  "respawn-timeout.commands.set_random.error.invalid_min": "¡El valor mínimo no es válido!",
+  "respawn-timeout.commands.set_random.error.invalid_max": "¡El valor máximo no es válido!",
+  "respawn-timeout.commands.set_random.success": "Se ha configurado el tiempo de espera a un número aleatorio de segundos entre %d y %d",
+  "respawn-timeout.info.self.na": "¡No estás esperando a revivir!",
+  "respawn-timeout.info.self.status": "¡Estás esperando a revivir! Debes esperar %s antes de revivir",
+  "respawn-timeout.info.self.respawned": "¡Has revivido!",
+  "respawn-timeout.info.player.na": "El jugador %s no está esperando a revivir!",
+  "respawn-timeout.info.player.respawned": "¡El jugador %s ha revivido!"
 }

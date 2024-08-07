@@ -1,11 +1,16 @@
 {
-  "cmd.respawn-timeout.clear.res": "Respawn timeout has been reset!",
-  "cmd.respawn-timeout.get.res": "Respawn timeout is %d%s",
-  "cmd.respawn-timeout.set.err": "Timeout must be a positive number!",
-  "cmd.respawn-timeout.set.res": "Respawn timeout set to %d%s",
-  "txt.respawn-timeout.player_na": "You are not on timeout!",
-  "txt.respawn-timeout.player_ext_na": "Player %s is not on timeout!",
-  "txt.respawn-timeout.player_ext_respawn": "Player %s has respawned!",
-  "txt.respawn-timeout.player_respawn": "You have respawned!",
-  "txt.respawn-timeout.player_status": "You are on timeout! You have to wait %s before respawning"
+  "respawn-timeout.commands.clear.success": "Respawn timeout has been reset!",
+  "respawn-timeout.commands.get.success.fixed": "Respawn timeout is %d%s",
+  "respawn-timeout.commands.get.success.random": "Respawn timeout is a random value between %d and %d",
+  "respawn-timeout.commands.set.error.negative": "Timeout must be a positive number!",
+  "respawn-timeout.commands.set.error.invalid": "Timeout in %s must be a number between %d and %d!",
+  "respawn-timeout.commands.set.success": "Respawn timeout set to %d%s",
+  "respawn-timeout.commands.set_random.error.invalid_min": "The minimum random value is not valid!",
+  "respawn-timeout.commands.set_random.error.invalid_max": "The maximum random value is not valid!",
+  "respawn-timeout.commands.set_random.success": "Respawn timeout set to be a random number of seconds between %d and %d",
+  "respawn-timeout.info.self.na": "You are not on timeout!",
+  "respawn-timeout.info.self.status": "You are on timeout! You have to wait %s before respawning",
+  "respawn-timeout.info.self.respawned": "You have respawned!",
+  "respawn-timeout.info.player.na": "Player %s is not on timeout!",
+  "respawn-timeout.info.player.respawned": "Player %s has respawned!"
 }

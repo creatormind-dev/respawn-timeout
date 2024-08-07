@@ -56,14 +56,14 @@ public class RespawnTimeoutMod implements ModInitializer {
                 final long remainingTime = serverState.timeUnit.toMillis(serverState.respawnTimeout) - (System.currentTimeMillis() - playerState.deathTimestamp);
 
                 player.sendMessage(Text.translatable(
-                    "txt.respawn-timeout.player_status",
+                    "respawn-timeout.info.self.status",
                     TimeFormatter.format(remainingTime, TimeUnit.MILLISECONDS)
                 ), false);
             }
             else if (playerStatus == PlayerStatus.AWAITING_RESPAWN) {
                 respawnPlayer(player);
 
-                player.sendMessage(Text.translatable("txt.respawn-timeout.player_respawn"), false);
+                player.sendMessage(Text.translatable("respawn-timeout.info.self.respawned"), false);
             }
         });
 
@@ -92,7 +92,7 @@ public class RespawnTimeoutMod implements ModInitializer {
 
             player.changeGameMode(GameMode.SPECTATOR);
             player.sendMessage(Text.translatable(
-                "txt.respawn-timeout.player_status",
+                "respawn-timeout.info.self.status",
                 TimeFormatter.format(serverState.respawnTimeout, serverState.timeUnit)
             ), false);
         });

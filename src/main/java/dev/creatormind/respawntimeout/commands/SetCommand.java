@@ -60,7 +60,7 @@ public class SetCommand {
     private static int set(ServerCommandSource source, long timeout, TimeUnit unit) throws CommandSyntaxException {
         // No comment.
         if (timeout < 0L)
-            throw new SimpleCommandExceptionType(Text.translatable("cmd.respawn-timeout.set.err")).create();
+            throw new SimpleCommandExceptionType(Text.translatable("respawn-timeout.commands.set.error.negative")).create();
 
         final ServerState serverState = ServerState.getServerState(source.getServer());
 
@@ -69,7 +69,7 @@ public class SetCommand {
         serverState.markDirty();
 
         source.sendFeedback(() -> Text.translatable(
-            "cmd.respawn-timeout.set.res",
+            "respawn-timeout.commands.set.success",
             timeout,
             unit.toString().toLowerCase().charAt(0) + ""
         ), true);

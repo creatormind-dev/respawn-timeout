@@ -26,7 +26,7 @@ public class GetCommand {
         final ServerState serverState = ServerState.getServerState(source.getServer());
 
         source.sendFeedback(() -> Text.translatable(
-            "cmd.respawn-timeout.get.res",
+            "respawn-timeout.commands.get.success.fixed",
             serverState.respawnTimeout,
             serverState.timeUnit.toString().toLowerCase().charAt(0) + ""
         ), false);
