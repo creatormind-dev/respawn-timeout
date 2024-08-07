@@ -33,6 +33,7 @@ public class ServerState extends PersistentState {
             final NbtCompound playerStateNbt = new NbtCompound();
 
             playerStateNbt.putLong("deathTimestamp", playerState.deathTimestamp);
+            playerStateNbt.putLong("respawnTimeout", playerState.respawnTimeout);
 
             playersNbt.put(uuid.toString(), playerStateNbt);
         });
