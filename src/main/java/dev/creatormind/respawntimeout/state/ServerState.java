@@ -14,9 +14,15 @@ import java.util.concurrent.TimeUnit;
 
 public class ServerState extends PersistentState {
 
+    public HashMap<UUID, PlayerState> players   = new HashMap<>();
+
+    // Min and max timeouts will always be in seconds.
+    public long maxRandomTimeout                = 0L;
+    public long minRandomTimeout                = 0L;
+
+    // This is the global/server specific timeout that will be applied to everyone equally.
     public long respawnTimeout                  = 0L;
     public TimeUnit timeUnit                    = TimeUnit.SECONDS;
-    public HashMap<UUID, PlayerState> players   = new HashMap<>();
 
 
     @Override
@@ -32,6 +38,8 @@ public class ServerState extends PersistentState {
         });
 
         nbt.put("players", playersNbt);
+        nbt.putLong("maxRandomTimeout", maxRandomTimeout);
+        nbt.putLong("minRandomTimeout", minRandomTimeout);
         nbt.putLong("respawnTimeout", respawnTimeout);
         nbt.putString("timeUnit", timeUnit.toString());
 
@@ -47,12 +55,15 @@ public class ServerState extends PersistentState {
             final PlayerState playerState = new PlayerState();
 
             playerState.deathTimestamp = playersNbt.getCompound(key).getLong("deathTimestamp");
+            playerState.respawnTimeout = playersNbt.getCompound(key).getLong("respawnTimeout");
 
             final UUID uuid = UUID.fromString(key);
 
             serverState.players.put(uuid, playerState);
         });
 
+        serverState.maxRandomTimeout = tag.getLong("maxRandomTimeout");
+        serverState.minRandomTimeout = tag.getLong("minRandomTimeout");
         serverState.respawnTimeout = tag.getLong("respawnTimeout");
 
         try {

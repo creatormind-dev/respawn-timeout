@@ -6,6 +6,8 @@ import dev.creatormind.respawntimeout.state.ServerState;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
 
+import java.util.concurrent.TimeUnit;
+
 import static net.minecraft.server.command.CommandManager.*;
 
 
@@ -25,7 +27,10 @@ public class ClearCommand {
     private static int clear(ServerCommandSource source) {
         final ServerState serverState = ServerState.getServerState(source.getServer());
 
-        serverState.respawnTimeout = 0;
+        serverState.timeUnit = TimeUnit.SECONDS;
+        serverState.respawnTimeout = 0L;
+        serverState.minRandomTimeout = 0L;
+        serverState.maxRandomTimeout = 0L;
         serverState.markDirty();
 
         source.sendFeedback(() -> Text.translatable("respawn-timeout.commands.clear.success"), false);
