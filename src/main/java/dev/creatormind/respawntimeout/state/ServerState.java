@@ -4,7 +4,6 @@ import dev.creatormind.respawntimeout.RespawnTimeoutMod;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.PersistentState;
 import net.minecraft.world.PersistentStateManager;
 
@@ -34,6 +33,7 @@ public class ServerState extends PersistentState {
             final NbtCompound playerStateNbt = new NbtCompound();
 
             playerStateNbt.putLong("deathTimestamp", playerState.deathTimestamp);
+            playerStateNbt.putLong("respawnTimeout", playerState.respawnTimeout);
 
             playersNbt.put(uuid.toString(), playerStateNbt);
         });
@@ -56,6 +56,7 @@ public class ServerState extends PersistentState {
             final PlayerState playerState = new PlayerState();
 
             playerState.deathTimestamp = playersNbt.getCompound(key).getLong("deathTimestamp");
+            playerState.respawnTimeout = playersNbt.getCompound(key).getLong("respawnTimeout");
 
             final UUID uuid = UUID.fromString(key);
 
@@ -77,18 +78,17 @@ public class ServerState extends PersistentState {
     }
 
     public static ServerState getServerState(MinecraftServer server) {
-        final ServerWorld overworld = server.getOverworld();
+        final PersistentStateManager stateManager = server.getOverworld().getPersistentStateManager();
 
-        if (overworld == null)
-            throw new NullPointerException("[Respawn Timeout] Overworld is null!");
-
-        final PersistentStateManager stateManager = overworld.getPersistentStateManager();
-
-        return stateManager.getOrCreate(
+        final ServerState state = stateManager.getOrCreate(
             ServerState::createFromNbt,
             ServerState::new,
             RespawnTimeoutMod.MOD_ID
         );
+
+        state.markDirty();
+
+        return state;
     }
 
     public static PlayerState getPlayerState(ServerPlayerEntity player) {
