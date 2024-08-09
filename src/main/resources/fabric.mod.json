@@ -13,6 +13,7 @@
     "sources": "https://github.com/creatormind-dev/respawn-timeout"
   },
   "license": "MIT",
+  "icon": "assets/respawn-timeout/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
