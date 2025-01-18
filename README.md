@@ -44,6 +44,12 @@ The mod is configurable via commands, since it operates on the server-side of th
 
 *Note: The mod will automatically respawn returning players if their timeout has finished.*
 
+### Version Information
+
+> Displays the currently running mod's version.
+
+**Usage:** `/respawntimeout version`
+
 ## Disclaimer
 
 Yes, this mod sounds like a terrible idea, but it's part of a mechanic employed in a server that I own.
