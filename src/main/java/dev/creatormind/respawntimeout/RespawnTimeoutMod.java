@@ -18,6 +18,7 @@ import net.minecraft.world.GameMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashSet;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -149,7 +150,17 @@ public class RespawnTimeoutMod implements ModInitializer {
         final int y = spawnPosition.getY();
         final int z = spawnPosition.getZ();
 
-        player.teleport(spawnWorld, x, y, z, player.getYaw(), player.getPitch());
+        player.teleport(
+            spawnWorld,
+            x,
+            y,
+            z,
+            new HashSet<>(),
+            player.getYaw(),
+            player.getPitch(),
+            true
+        );
+
         player.changeGameMode(server.getDefaultGameMode());
 
         // Resets the timeout status.
