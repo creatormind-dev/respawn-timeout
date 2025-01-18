@@ -18,6 +18,7 @@ import net.minecraft.world.GameMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashSet;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -25,6 +26,8 @@ import java.util.concurrent.TimeUnit;
 public class RespawnTimeoutMod implements ModInitializer {
 
     public static final String MOD_ID = "respawn-timeout";
+    public static final String MOD_VERSION = "1.2.0";
+    public static final String MINECRAFT_VERSION = "1.21.2";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
 
@@ -42,6 +45,7 @@ public class RespawnTimeoutMod implements ModInitializer {
             GetCommand.register(dispatcher);
             ClearCommand.register(dispatcher);
             RespawnCommand.register(dispatcher);
+            VersionCommand.register(dispatcher);
         });
 
         // Automatic respawn verification if needed when joining.
@@ -149,7 +153,17 @@ public class RespawnTimeoutMod implements ModInitializer {
         final int y = spawnPosition.getY();
         final int z = spawnPosition.getZ();
 
-        player.teleport(spawnWorld, x, y, z, player.getYaw(), player.getPitch());
+        player.teleport(
+            spawnWorld,
+            x,
+            y,
+            z,
+            new HashSet<>(),
+            player.getYaw(),
+            player.getPitch(),
+            true
+        );
+
         player.changeGameMode(server.getDefaultGameMode());
 
         // Resets the timeout status.
