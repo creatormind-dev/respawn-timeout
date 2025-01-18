@@ -27,7 +27,6 @@ public class RespawnTimeoutMod implements ModInitializer {
 
     public static final String MOD_ID = "respawn-timeout";
     public static final String MOD_VERSION = "1.2.0";
-    public static final String MINECRAFT_VERSION = "1.21.2";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
 

@@ -22,8 +22,7 @@ public class VersionCommand {
     private static int version(ServerCommandSource source) {
         source.sendFeedback(() -> Text.translatable(
             "respawn-timeout.commands.version.success",
-            RespawnTimeoutMod.MOD_VERSION,
-            RespawnTimeoutMod.MINECRAFT_VERSION
+            RespawnTimeoutMod.MOD_VERSION
         ), false);
 
         return Command.SINGLE_SUCCESS;
