@@ -1,6 +1,21 @@
-# Respawn Timeout
+<h1 align="center">
+    <br />
+    Respawn Timeout
+    <br />
+</h1>
 
-Respawn Timeout is a Fabric mod that times out players when they die, preventing them from immediately respawning. Go outside and touch some grass in the meantime.
+<h4 align="center">
+    A Fabric mod for Minecraft that times out players when they die,
+    preventing them from immediately respawning.
+</h4>
+
+<p align="center">
+    <br />
+    <a href="https://modrinth.com/mod/respawn-timeout/versions"><img alt="Modrinth Version" src="https://img.shields.io/modrinth/v/respawn-timeout?style=for-the-badge&color=green"></a>
+    <img alt="Modrinth Downloads" src="https://img.shields.io/modrinth/dt/respawn-timeout?style=for-the-badge&color=blue">
+    <img alt="GitHub License" src="https://img.shields.io/github/license/creatormind-dev/respawn-timeout?style=for-the-badge">
+    <a href="https://buymeacoffee.com/creatormind"><img alt="Donate" src="https://img.shields.io/badge/%24-donate-bb5794?style=for-the-badge"></a>
+</p>
 
 ## Configuration
 
